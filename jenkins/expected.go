@@ -5,3 +5,4 @@ type Example struct {
 	SecondField string `json:"second_field"`
 	ThirdField  string `json:"third_field"`
 }
+
