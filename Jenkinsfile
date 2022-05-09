@@ -1,18 +1,17 @@
 def builderImage = "bsponge/builder:1.0.5"
 def testerImage = "bsponge/tester:1.0.5"
 def deployerImage = "bsponge/deployer:1.0.5"
-def deploymentImage = "deployment-image:${GIT_COMMIT}"
+def deploymentImage = "deployment-image:${env.GIT_COMMIT}"
 
 pipeline {
 	agent any
-
 		stages {
 			stage('prepare') {
 				steps {
 					sh "docker volume create output"
-						sh "docker volume create input"
-						sh "docker run --name cloner -dit -v input:/input alpine:latest"
-						sh "docker cp . cloner:/input"
+					sh "docker volume create input"
+					sh "docker run --name cloner -dit -v input:/input alpine:latest"
+					sh "docker cp . cloner:/input"
 				}
 			}
 			stage('build') {
