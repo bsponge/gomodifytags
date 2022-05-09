@@ -8,7 +8,6 @@ pipeline {
 
 	environment {
 		DOCKERHUB_CREDENTIALS=credentials("docker-hub-creds")
-		env.GIT_COMMIT = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
 	}
 
 	stages {
@@ -18,6 +17,7 @@ pipeline {
 				sh "docker volume create input"
 				sh "docker run --name cloner -dit -v input:/input alpine:latest"
 				sh "docker cp . cloner:/input"
+				sh "env"
 			}
 		}
 		stage('build') {
