@@ -5,6 +5,11 @@ def deploymentImage = "deployment-image:${env.GIT_COMMIT}"
 
 pipeline {
 	agent any
+		
+		environment {
+			DOCKERHUB_CREDENTIALS=credentials("dockerhub-creds")
+		}
+		
 		stages {
 			stage('prepare') {
 				steps {
@@ -43,10 +48,18 @@ pipeline {
 					sh "diff testoutput.log jenkins/expected.go"
 				}
 			}
+			stage('publish') {
+				steps {
+					sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+					sh "docker push ${deploymentImage}"
+				}
+			}
 		}
 	post {
 		always {
 			sh "docker rm -f builder"
+				sh "docker logout"
+
 				archiveArtifacts artifacts: 'pipeline.log' 
 
 				sh "rm *.log"
