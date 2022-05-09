@@ -55,7 +55,7 @@ pipeline {
 				sh "docker rm -f test-deployment"
 				sh "docker rmi ${builderImage}"
 				sh "docker rmi ${testerImage}"
-				sh "docker rmi test-deploy"
+				sh "docker rmi ${deploymentImage}"
 		}
 	}
 }
