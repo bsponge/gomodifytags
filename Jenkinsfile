@@ -1,7 +1,7 @@
 def builderImage = "bsponge/builder:1.0.5"
 def testerImage = "bsponge/tester:1.0.5"
 def deployerImage = "bsponge/deployer:1.0.5"
-def deploymentImage = "deployment-image"
+def deploymentImage = "deployment-image:$GIT_COMMIT"
 
 pipeline {
 	agent any
