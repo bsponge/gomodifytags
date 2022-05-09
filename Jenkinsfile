@@ -69,7 +69,8 @@ pipeline {
 				sh "docker rmi ${testerImage}"
 				sh "docker rmi ${deploymentImage}"
 				*/
-				sh "docker system prune -f"
+				sh "docker rm -vf $(docker ps -aq)"
+				sh "docker rmi -f $(docker images -aq)"
 				sh "docker logout"
 		}
 	}
