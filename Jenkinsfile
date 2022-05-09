@@ -25,10 +25,10 @@ pipeline {
         }
         stage('create artifacts') {
             steps {
+		sh "ls"
                 sh "docker logs builder >> pipeline.log"
                 sh "docker logs tester >> pipeline.log"
                 sh "docker run --name copier -dit -v output:/output alpine:latest"
-		sh "ls"
                 sh "docker cp copier:/output/gomodifytags gomodifytags"
 		sh "ls"
             }
