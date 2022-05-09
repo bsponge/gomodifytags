@@ -27,7 +27,6 @@ pipeline {
 			}
 			stage('create artifacts') {
 				steps {
-					sh "ls"
 					sh "docker logs builder >> pipeline.log"
 					sh "docker logs tester >> pipeline.log"
 				}
