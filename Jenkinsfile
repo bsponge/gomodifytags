@@ -60,7 +60,7 @@ pipeline {
 			archiveArtifacts artifacts: 'pipeline.log' 
 			sh "rm *.log"
 
-			sh "docker system prune -a"
+			sh "docker system prune -af"
 
 			sh "docker logout"
 		}
