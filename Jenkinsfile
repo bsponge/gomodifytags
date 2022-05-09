@@ -29,7 +29,7 @@ pipeline {
                 sh "docker logs tester >> pipeline.log"
                 sh "docker run --name copier -dit -v output:/output alpine:latest"
                 sh "docker cp copier:/output/gomodifytags ./gomodifytags"
-                archiveArtifacts artifacts: 'containerd-nydus-grpc'
+                archiveArtifacts artifacts: 'gomodifytags'
                 archiveArtifacts artifacts: 'pipeline.log' 
             }
         }
