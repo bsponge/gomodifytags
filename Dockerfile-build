@@ -1,0 +1,7 @@
+FROM golang:1.18.1-bullseye
+
+RUN	mkdir -p /project
+CMD	cp -r /input/gomodifytags /project && \
+	cd /project/gomodifytags && \
+	go build . && \
+	cp gomodifytags /output
