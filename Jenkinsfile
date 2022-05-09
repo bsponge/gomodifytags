@@ -57,18 +57,18 @@ pipeline {
 		}
 	post {
 		always {
+
+			archiveArtifacts artifacts: 'pipeline.log' 
+
+			sh "rm *.log"
 			sh "docker rm -f builder"
-				sh "docker logout"
-
-				archiveArtifacts artifacts: 'pipeline.log' 
-
-				sh "rm *.log"
-				sh "docker rm -f tester"
-				sh "docker rm -f cloner"
-				sh "docker rm -f test-deployment"
-				sh "docker rmi ${builderImage}"
-				sh "docker rmi ${testerImage}"
-				sh "docker rmi ${deploymentImage}"
+			sh "docker rm -f tester"
+			sh "docker rm -f cloner"
+			sh "docker rm -f test-deployment"
+			sh "docker rmi ${builderImage}"
+			sh "docker rmi ${testerImage}"
+			sh "docker rmi ${deploymentImage}"
+			sh "docker logout"
 		}
 	}
 }
