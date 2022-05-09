@@ -1,9 +1,7 @@
-GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
-
 def builderImage = "bsponge/builder:1.0.5"
 def testerImage = "bsponge/tester:1.0.5"
 def deployerImage = "bsponge/deployer:1.0.5"
-def deploymentImage = "bsponge/deployment-image:${GIT_COMMIT_HASH}"
+def deploymentImage = "bsponge/deployment-image:$GIT_COMMIT"
 
 pipeline {
 	agent any
