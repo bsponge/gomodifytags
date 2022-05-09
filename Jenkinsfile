@@ -23,7 +23,7 @@ pipeline {
                 sh "docker run --name tester -v input:/input ${testerImage}"
             }
         }
-        stage('cleanup') {
+        stage('create artifacts') {
             steps {
                 sh "docker logs builder >> pipeline.log"
                 sh "docker logs tester >> pipeline.log"
