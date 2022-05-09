@@ -52,8 +52,10 @@ pipeline {
 				sh "docker rm -f tester"
 				sh "docker rm -f copier"
 				sh "docker rm -f cloner"
+				sh "docker rm -f test-deployment"
 				sh "docker rmi ${builderImage}"
 				sh "docker rmi ${testerImage}"
+				sh "docker rmi test-deploy"
 
 				archiveArtifacts artifacts: 'pipeline.log' 
 		}
