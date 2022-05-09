@@ -37,12 +37,14 @@ pipeline {
 					sh "docker build -t ${deploymentImage} -f Dockerfile-deploy ."
 				}
 			}
+			/*
 			stage('test deploy') {
 				steps {
 					sh 'docker build -t test-deploy -f Dockerfile-test-deploy --build-arg image=${deploymentImage} .'
 					sh "docker run -it --name test-deployment test-deploy"
 				}
 			}
+			*/
 		}
 	post {
 		always {
