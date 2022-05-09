@@ -48,6 +48,8 @@ pipeline {
 	post {
 		always {
 			sh "docker rm -f builder"
+				archiveArtifacts artifacts: 'pipeline.log' 
+
 				sh "rm *.log"
 				sh "docker rm -f tester"
 				sh "docker rm -f cloner"
@@ -55,8 +57,6 @@ pipeline {
 				sh "docker rmi ${builderImage}"
 				sh "docker rmi ${testerImage}"
 				sh "docker rmi test-deploy"
-
-				archiveArtifacts artifacts: 'pipeline.log' 
 		}
 	}
 }
