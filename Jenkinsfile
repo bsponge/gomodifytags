@@ -33,7 +33,12 @@ pipeline {
 			}
 			stage('deploy') {
 				steps {
-					sh "docker build -t deployment-image -f Dockerfile-deploy ."
+					sh "docker build -t deployment-image:$GIT_COMMIT -f Dockerfile-deploy ."
+				}
+			}
+			stage('test deploy') {
+				steps {
+					sh "echo siema"
 				}
 			}
 		}
