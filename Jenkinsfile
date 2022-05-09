@@ -1,4 +1,8 @@
-
+env.GIT_COMMIT = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
+def builderImage = "bsponge/builder:1.0.5"
+def testerImage = "bsponge/tester:1.0.5"
+def deployerImage = "bsponge/deployer:1.0.5"
+def deploymentImage = "bsponge/deployment-image:$GIT_COMMIT"
 
 pipeline {
 	agent any
@@ -6,11 +10,6 @@ pipeline {
 	environment {
 		DOCKERHUB_CREDENTIALS=credentials("docker-hub-creds")
 	}
-
-	def builderImage = "bsponge/builder:1.0.5"
-	def testerImage = "bsponge/tester:1.0.5"
-	def deployerImage = "bsponge/deployer:1.0.5"
-	def deploymentImage = "bsponge/deployment-image:$GIT_COMMIT"
 
 	stages {
 		stage('prepare') {
