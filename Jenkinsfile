@@ -15,6 +15,7 @@ pipeline {
 			steps {
 				sh "docker volume create output"
 				sh "docker volume create input"
+				sh "docker ps -a"
 				sh "docker run --name cloner -dit -v input:/input alpine:latest"
 				sh "docker cp . cloner:/input"
 			}
