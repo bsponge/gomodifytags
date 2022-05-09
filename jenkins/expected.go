@@ -1,0 +1,7 @@
+package jenkins
+
+type Example struct {
+	FirstField  string `json:"first_field"`
+	SecondField string `json:"second_field"`
+	ThirdField  string `json:"third_field"`
+}
