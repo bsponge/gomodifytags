@@ -28,7 +28,7 @@ pipeline {
                 sh "docker logs builder >> pipeline.log"
                 sh "docker logs tester >> pipeline.log"
                 sh "docker run --name copier -dit -v output:/output alpine:latest"
-                sh "docker cp copier:/output/gomodifytags ./gomodifytags"
+                sh "docker cp copier:/output/gomodifytags gomodifytags"
                 archiveArtifacts artifacts: 'gomodifytags'
                 archiveArtifacts artifacts: 'pipeline.log' 
             }
