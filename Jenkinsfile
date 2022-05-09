@@ -29,8 +29,6 @@ pipeline {
                 sh "docker logs tester >> pipeline.log"
                 sh "docker run --name copier -dit -v output:/output alpine:latest"
                 sh "docker cp copier:/output/gomodifytags gomodifytags"
-                archiveArtifacts artifacts: 'gomodifytags'
-                archiveArtifacts artifacts: 'pipeline.log' 
             }
         }
     }
@@ -41,7 +39,9 @@ pipeline {
             sh "docker rm -f copier"
 	    sh "docker rm -f cloner"
             sh "docker rmi ${builderImage}"
-            sh "docker rmi ${testerImage}"
-        }
+	    sh "docker rmi ${testerImage}"
+	    archiveArtifacts artifacts: 'gomodifytags'
+	    archiveArtifacts artifacts: 'pipeline.log' 
+	}
     }
 }
