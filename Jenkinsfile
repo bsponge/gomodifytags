@@ -17,7 +17,6 @@ pipeline {
 				sh "docker volume create input"
 				sh "docker run --name cloner -dit -v input:/input alpine:latest"
 				sh "docker cp . cloner:/input"
-				sh "env"
 			}
 		}
 		stage('build') {
@@ -38,12 +37,12 @@ pipeline {
 		}
 		stage('deploy') {
 			steps {
-				sh "docker build -t ${deploymentImage}:${env.GIT_COMMIT} -f Dockerfile-deploy ."
+				sh "docker build -t ${deploymentImage}:${GIT_COMMIT} -f Dockerfile-deploy ."
 			}
 		}
 		stage('test deploy') {
 			steps {
-				sh "docker build -t test-deploy -f Dockerfile-test-deploy --build-arg image=${deploymentImage}:${env.GIT_COMMIT} ."
+				sh "docker build -t test-deploy -f Dockerfile-test-deploy --build-arg image=${deploymentImage}:${GIT_COMMIT} ."
 				sh "docker run --name test-deployment test-deploy"
 				sh "docker logs test-deployment >> testoutput.log"
 				sh "diff testoutput.log jenkins/expected.go"
@@ -52,7 +51,7 @@ pipeline {
 		stage('publish') {
 			steps {
 				sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-				sh "docker push ${deploymentImage}:${env.GIT_COMMIT}"
+				sh "docker push ${deploymentImage}:${GIT_COMMIT}"
 			}
 		}
 	}
