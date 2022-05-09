@@ -10,7 +10,7 @@ pipeline {
                 sh "docker volume create output"
                 sh "docker volume create input"
 		sh "docker run -dit --name cloner -v input:/input alpine:latest"
-		sh "docker exec cloner -d git clone https://github.com/bsponge/gomodifytags /input/gomodifytags"
+		sh "docker exec cloner git clone https://github.com/bsponge/gomodifytags /input/gomodifytags"
             }
         }
         stage('build') {
