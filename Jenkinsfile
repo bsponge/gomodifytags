@@ -69,7 +69,7 @@ pipeline {
 				sh "docker rmi ${testerImage}"
 				sh "docker rmi ${deploymentImage}"
 				*/
-				docker system prune -f
+				sh "docker system prune -f"
 				sh "docker logout"
 		}
 	}
