@@ -59,8 +59,8 @@ pipeline {
 		always {
 
 			archiveArtifacts artifacts: 'pipeline.log' 
-
 				sh "rm *.log"
+				/*
 				sh "docker rm -f builder"
 				sh "docker rm -f tester"
 				sh "docker rm -f cloner"
@@ -68,6 +68,8 @@ pipeline {
 				sh "docker rmi ${builderImage}"
 				sh "docker rmi ${testerImage}"
 				sh "docker rmi ${deploymentImage}"
+				*/
+				docker system prune -f
 				sh "docker logout"
 		}
 	}
