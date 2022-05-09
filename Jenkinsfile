@@ -48,6 +48,7 @@ pipeline {
 	post {
 		always {
 			sh "docker rm -f builder"
+				sh "rm *.log"
 				sh "docker rm -f tester"
 				sh "docker rm -f cloner"
 				sh "docker rm -f test-deployment"
