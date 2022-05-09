@@ -1,6 +1,7 @@
 def builderImage = "bsponge/builder:1.0.5"
 def testerImage = "bsponge/tester:1.0.5"
 def deployerImage = "bsponge/deployer:1.0.5"
+def deploymentImage = "deployment-image:$GIT_COMMIT"
 
 pipeline {
 	agent any
@@ -33,12 +34,13 @@ pipeline {
 			}
 			stage('deploy') {
 				steps {
-					sh "docker build -t deployment-image:$GIT_COMMIT -f Dockerfile-deploy ."
+					sh "docker build -t ${deploymentImage} -f Dockerfile-deploy ."
 				}
 			}
 			stage('test deploy') {
 				steps {
-					sh "echo siema"
+					sh 'docker build -t test-deploy -f Dockerfile-test-deploy --build-arg image="${deploymentImage}" .'
+					sh "docker run -it --name test-deployment test-deploy"
 				}
 			}
 		}
@@ -50,7 +52,6 @@ pipeline {
 				sh "docker rm -f cloner"
 				sh "docker rmi ${builderImage}"
 				sh "docker rmi ${testerImage}"
-				sh "ls"
 
 				archiveArtifacts artifacts: 'pipeline.log' 
 		}

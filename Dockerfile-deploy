@@ -1,4 +1,3 @@
 FROM alpine:latest
 
 COPY gomodifytags /usr/local/bin
-CMD sh
