@@ -5,6 +5,10 @@ def deploymentImage = "bsponge/deployment-image"
 
 pipeline {
 	agent any
+	parameters {
+		string(name: 'version', defaultValue: 'latest', description: '')
+		booleanParam(name: 'promote', defaultValue: 'true', description: '')
+	}
 
 	environment {
 		DOCKERHUB_CREDENTIALS=credentials("docker-hub-creds")
