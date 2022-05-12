@@ -36,8 +36,8 @@ pipeline {
 		}
 		stage('create artifacts') {
 			steps {
-				sh "docker logs builder >> pipeline.log"
-				sh "docker logs tester >> pipeline.log"
+				sh "docker logs builder >> pipeline${env.version}.log"
+				sh "docker logs tester >> pipeline${env.version}.log"
 			}
 		}
 		stage('deploy') {
@@ -68,7 +68,7 @@ pipeline {
 	}
 	post {
 		always {
-			archiveArtifacts artifacts: 'pipeline${env.version}.log' 
+			archiveArtifacts artifacts: '*.log' 
 			sh "rm *.log"
 
 			sh "docker rm -f \$(docker ps -a -q)"
