@@ -55,7 +55,7 @@ pipeline {
 		stage('publish') {
 			steps {
 				script {
-					if (env.promote == true) {
+					if (env.promote == "true") {
 						sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
 						sh "docker push ${deploymentImage}:${env.version}"
 					} else {
