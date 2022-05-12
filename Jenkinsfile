@@ -36,8 +36,8 @@ pipeline {
 		}
 		stage('create artifacts') {
 			steps {
-				sh "docker logs builder >> pipeline${env.version}.log"
-				sh "docker logs tester >> pipeline${env.version}.log"
+				sh "docker logs builder >> pipeline-${env.version}.log"
+				sh "docker logs tester >> pipeline-${env.version}.log"
 			}
 		}
 		stage('deploy') {
