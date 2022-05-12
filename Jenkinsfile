@@ -41,12 +41,12 @@ pipeline {
 		}
 		stage('deploy') {
 			steps {
-				sh "docker build -t ${deploymentImage}:${GIT_COMMIT} -f Dockerfile-deploy ."
+				sh "docker build -t ${deploymentImage}:${env.version} -f Dockerfile-deploy ."
 			}
 		}
 		stage('test deploy') {
 			steps {
-				sh "docker build -t test-deploy -f Dockerfile-test-deploy --build-arg image=${deploymentImage}:${GIT_COMMIT} ."
+				sh "docker build -t test-deploy -f Dockerfile-test-deploy --build-arg image=${deploymentImage}:${env.version} ."
 				sh "docker run --name test-deployment test-deploy"
 				sh "docker logs test-deployment >> testoutput.log"
 				sh "diff testoutput.log jenkins/expected.go"
@@ -57,7 +57,9 @@ pipeline {
 				script {
 					if (env.promote == true) {
 						sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-						sh "docker push ${deploymentImage}:${GIT_COMMIT}"
+						sh "docker push ${deploymentImage}:${env.version}"
+					} else {
+						sh "echo NOT PUBLISHING"
 					}
 				}
 			}
@@ -65,7 +67,7 @@ pipeline {
 	}
 	post {
 		always {
-			archiveArtifacts artifacts: 'pipeline.log' 
+			archiveArtifacts artifacts: 'pipeline${env.version}.log' 
 			sh "rm *.log"
 
 			sh "docker rm -f \$(docker ps -a -q)"
