@@ -54,8 +54,10 @@ pipeline {
 		}
 		stage('publish') {
 			steps {
-				sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-				sh "docker push ${deploymentImage}:${GIT_COMMIT}"
+				if ($promote == true) {
+					sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+					sh "docker push ${deploymentImage}:${GIT_COMMIT}"
+				}
 			}
 		}
 	}
