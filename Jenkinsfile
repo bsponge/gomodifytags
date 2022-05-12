@@ -21,6 +21,7 @@ pipeline {
 				sh "docker volume create input"
 				sh "docker run --name cloner -dit -v input:/input alpine:latest"
 				sh "docker cp . cloner:/input"
+				sh "docker rm -f cloner"
 			}
 		}
 		stage('build') {
