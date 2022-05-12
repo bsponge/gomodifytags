@@ -54,7 +54,7 @@ pipeline {
 		}
 		stage('publish') {
 			steps {
-				if ($promote == true) {
+				if (env.promote == true) {
 					sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
 					sh "docker push ${deploymentImage}:${GIT_COMMIT}"
 				}
