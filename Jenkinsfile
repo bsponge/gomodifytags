@@ -71,11 +71,11 @@ pipeline {
 			archiveArtifacts artifacts: '*.log' 
 			sh "rm *.log"
 
-			sh "docker rm -f \$(docker ps -a -q)"
-			sh "docker system prune -af"
-			sh "docker rm \$(docker ps -a -q)"
+			sh 'docker rm -f $(docker ps -a -q)'
+			sh 'docker system prune -af'
+			sh 'docker rm $(docker ps -a -q)'
 
-			sh "docker logout"
+			sh 'docker logout'
 		}
 	}
 }
