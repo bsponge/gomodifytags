@@ -1,6 +1,5 @@
 def builderImage = "bsponge/builder:1.0.5"
 def testerImage = "bsponge/tester:1.0.5"
-def deployerImage = "bsponge/deployer:1.0.5"
 def deploymentImage = "bsponge/deployment-image"
 
 pipeline {
