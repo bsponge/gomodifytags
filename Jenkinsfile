@@ -14,7 +14,7 @@ pipeline {
 	}
 
 	stages {
-		stage('prepare') {
+		stage('Prepare') {
 			steps {
 				sh "docker volume create output"
 				sh "docker volume create input"
@@ -23,28 +23,28 @@ pipeline {
 				sh "docker rm -f cloner"
 			}
 		}
-		stage('build') {
+		stage('Build') {
 			steps {
 				sh "docker run --name builder -v input:/input -v output:/output ${builderImage}"
 			}
 		}
-		stage('test') {
+		stage('Test') {
 			steps {
 				sh "docker run --name tester -v input:/input ${testerImage}"
 			}
 		}
-		stage('create artifacts') {
+		stage('Create artifacts') {
 			steps {
 				sh "docker logs builder >> pipeline-${env.version}.log"
 				sh "docker logs tester >> pipeline-${env.version}.log"
 			}
 		}
-		stage('deploy') {
+		stage('Deploy') {
 			steps {
 				sh "docker build -t ${deploymentImage}:${env.version} -f Dockerfile-deploy ."
 			}
 		}
-		stage('test deploy') {
+		stage('Test deploy') {
 			steps {
 				sh "docker build -t test-deploy -f Dockerfile-test-deploy --build-arg image=${deploymentImage}:${env.version} ."
 				sh "docker run --name test-deployment test-deploy"
@@ -52,7 +52,7 @@ pipeline {
 				sh "diff testoutput.log jenkins/expected.go"
 			}
 		}
-		stage('publish') {
+		stage('Publish') {
 			steps {
 				script {
 					if (env.promote == "true") {
