@@ -1,3 +1,5 @@
+// +build random
+
 package jenkins
 
 type Example struct {
