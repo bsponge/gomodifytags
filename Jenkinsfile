@@ -19,7 +19,7 @@ pipeline {
 				sh "docker volume create output"
 				sh "docker volume create input"
 				sh "docker run --name cloner -dit -v input:/input -v output:/output alpine:latest"
-				sh "docker cp . cloner:/input"
+				sh "docker cp . cloner:/input/gomodifytags"
 			}
 		}
 		stage('Build') {
@@ -77,6 +77,7 @@ pipeline {
 
 			sh 'docker rm -f $(docker ps -a -q)'
 			sh 'docker system prune -af'
+			sh 'docker volume prune -af'
 
 			sh 'docker logout'
 		}
