@@ -20,12 +20,16 @@ pipeline {
 				sh "docker volume create input"
 				sh "docker run --name cloner -dit -v input:/input alpine:latest"
 				sh "docker cp . cloner:/input"
-				sh "docker rm -f cloner"
 			}
 		}
 		stage('Build') {
 			steps {
 				sh "docker run --name builder -v input:/input -v output:/output ${builderImage}"
+			}
+		}
+		stage('Copy bin file') {
+			steps {
+				sh "docker cp output/gomodifytags ."
 			}
 		}
 		stage('Test') {
