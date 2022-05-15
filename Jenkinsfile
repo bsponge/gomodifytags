@@ -76,7 +76,7 @@ pipeline {
 
 			sh 'docker rm -f $(docker ps -a -q)'
 			sh 'docker system prune -af'
-			sh 'docker volume prune -af'
+			sh 'docker volume prune -f'
 
 			sh 'docker logout'
 		}
