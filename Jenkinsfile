@@ -45,7 +45,6 @@ pipeline {
 		}
 		stage('Deploy') {
 			steps {
-				sh "ls"
 				sh "docker build -t ${deploymentImage}:${env.version} -f Dockerfile-deploy ."
 			}
 		}
