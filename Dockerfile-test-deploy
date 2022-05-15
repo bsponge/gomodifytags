@@ -2,5 +2,5 @@ ARG image
 
 FROM $image
 
-COPY ./jenkins/example.go .
-CMD gomodifytags -file example.go -all -add-tags json
+COPY ./jenkins/example .
+CMD gomodifytags -file example -all -add-tags json

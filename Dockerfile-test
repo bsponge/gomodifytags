@@ -1,4 +1,4 @@
 FROM golang:1.18.1-bullseye
 
-WORKDIR /input/gomodifytags
+WORKDIR /input
 CMD go test ./...
