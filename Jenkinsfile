@@ -73,7 +73,7 @@ pipeline {
 	post {
 		always {
 			archiveArtifacts artifacts: '*.log' 
-			sh "rm *.log"
+			sh "rm -f *.log"
 
 			sh 'docker rm -f $(docker ps -a -q)'
 			sh 'docker system prune -af'
