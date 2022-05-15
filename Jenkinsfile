@@ -29,7 +29,7 @@ pipeline {
 		}
 		stage('Copy bin file') {
 			steps {
-				sh "docker cp output/gomodifytags ."
+				sh "docker cp cloner:output/gomodifytags ."
 			}
 		}
 		stage('Test') {
