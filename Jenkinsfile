@@ -53,7 +53,7 @@ pipeline {
 				sh "docker build -t test-deploy -f Dockerfile-test-deploy --build-arg image=${deploymentImage}:${env.version} ."
 				sh "docker run --name test-deployment test-deploy"
 				sh "docker logs test-deployment >> testoutput.log"
-				sh "diff testoutput.log jenkins/expected.go"
+				sh "diff testoutput.log jenkins/expected"
 			}
 		}
 		stage('Publish') {
