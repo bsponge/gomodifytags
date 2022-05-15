@@ -33,7 +33,7 @@ pipeline {
 				sh "docker run --name tester -v input:/input ${testerImage}"
 			}
 		}
-		stage('Create artifacts') {
+		stage('Create log artifact') {
 			steps {
 				sh "docker logs builder >> pipeline-${env.version}.log"
 				sh "docker logs tester >> pipeline-${env.version}.log"
@@ -41,6 +41,7 @@ pipeline {
 		}
 		stage('Deploy') {
 			steps {
+				sh "ls"
 				sh "docker build -t ${deploymentImage}:${env.version} -f Dockerfile-deploy ."
 			}
 		}
